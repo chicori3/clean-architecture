@@ -2,6 +2,7 @@ package java.io.buckpal.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Value;
 
 import java.time.LocalDateTime;
@@ -9,9 +10,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Account {
 
+    @Getter
     private AccountId id;
+    @Getter
     private Money baseLineBalance;
+    @Getter
     private ActivityWindow activityWindow;
+
+    public static Account withoutId(Money baseLineBalance, ActivityWindow activityWindow) {
+        return new Account(null, baseLineBalance, activityWindow);
+    }
+
+    public static Account withId(AccountId accountId, Money baseLineBalance, ActivityWindow activityWindow) {
+        return new Account(accountId, baseLineBalance, activityWindow);
+    }
 
     public Money calculateBalance() {
         return Money.add(
